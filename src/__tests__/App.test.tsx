@@ -6,10 +6,16 @@ import { describe } from 'vitest';
 // import { fireEvent } from '@testing-library/react';
 import App from '../App.jsx';
 
-describe('App tests', () => {
+describe('App tests: zero state', () => {
     test('renders upload component as empty state', () => {
         render(<App />);
         // screen.debug();
-        expect(screen.getByText('Browse or drag files here')).toBeDefined();
+        expect(screen.getByText('Browse')).toBeDefined();
+    });
+
+    test('renders description of upload component', () => {
+        render(<App />);
+        // screen.debug();
+        expect(screen.getByText('You can upload up to 5 json files.')).toBeDefined();
     });
 });
