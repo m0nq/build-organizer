@@ -1,12 +1,5 @@
-// export const APP_STATE = {
-//   EMPTY: '',
-//   LOADING: 'loading',
-//   ERROR: 'error',
-//   COMPLETE: 'complete'
-// };
-
 export enum AppState {
-    EMPTY = '',
+    EMPTY = 'empty',
     LOADING = 'loading',
     ERROR = 'error',
     COMPLETE = 'complete'

@@ -1,10 +1,10 @@
-import viteLogo from '/vite.svg';
-import { useState } from 'react';
 import { useReducer } from 'react';
+import { Dispatch } from 'react';
 
-import reactLogo from './assets/react.svg';
+import { AppState } from '@const/AppState.ts';
+import { FileUpload } from '@components/FileUpload.component.tsx';
+
 import './App.css';
-import { AppState } from './const/AppState.ts';
 
 // App component should have at least 4 states - empty, loading, error, complete
 // while processing a file, if there are any syntax errors (i.e. JSON.parse -> Error) then move to error state
@@ -47,32 +47,30 @@ const appReducer = (state: AppState, { type }: { type: AppState }) => {
 ;
 
 function App() {
-    const [count, setCount] = useState(0);
-    const [state, dispatch] = useReducer(appReducer, AppState.EMPTY);
+    const [state, dispatch]: [AppState, Dispatch<{ type: AppState }>] = useReducer(appReducer, AppState.EMPTY);
     // four state component
 
     return (
         <>
-            <div>
-                <a href="https://vitejs.dev" target="_blank">
-                    <img src={viteLogo} className="logo" alt="Vite logo" />
-                </a>
-                <a href="https://react.dev" target="_blank">
-                    <img src={reactLogo} className="logo react" alt="React logo" />
-                </a>
-            </div>
-            <h1>Vite + React</h1>
-            <div className="card">
-                <button onClick={() => setCount((count) => count + 1)}>
-                    count is {count}
-                </button>
-                <p>
-                    Edit <code>src/App.jsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className="read-the-docs">
-                Click on the Vite and React logos to learn more
-            </p>
+            {state === AppState.EMPTY && (<FileUpload dispatch={dispatch} />)}
+            {/*{*/}
+            {/*    state === AppState.LOADING && (*/}
+            {/*        <Pane maxWidth={654}>*/}
+            {/*            <FileUploader />*/}
+            {/*        </Pane>)*/}
+            {/*}*/}
+            {/*{*/}
+            {/*    state === AppState.ERROR && (*/}
+            {/*        <Pane maxWidth={654}>*/}
+            {/*            <FileUploader />*/}
+            {/*        </Pane>)*/}
+            {/*}*/}
+            {/*{*/}
+            {/*    state === AppState.COMPLETE && (*/}
+            {/*        <Pane maxWidth={654}>*/}
+            {/*            <FileUploader />*/}
+            {/*        </Pane>)*/}
+            {/*}*/}
         </>
     );
 }

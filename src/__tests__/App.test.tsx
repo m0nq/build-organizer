@@ -4,12 +4,12 @@ import { test } from 'vitest';
 import { expect } from 'vitest';
 import { describe } from 'vitest';
 // import { fireEvent } from '@testing-library/react';
-// import { useState } from 'react';
 import App from '../App.jsx';
 
-describe('App test', () => {
-  test('renders', () => {
-    render(<App />);
-    expect(screen.getByText('Increase')).toBeDefined();
-  });
+describe('App tests', () => {
+    test('renders upload component as empty state', () => {
+        render(<App />);
+        // screen.debug();
+        expect(screen.getByText('Browse or drag files here')).toBeDefined();
+    });
 });
