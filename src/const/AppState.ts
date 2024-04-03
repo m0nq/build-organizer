@@ -1,6 +1,6 @@
 export enum AppState {
     EMPTY = 'empty',
-    LOADING = 'loading',
+    PROCESSING = 'processing',
     ERROR = 'error',
     COMPLETE = 'complete'
 }

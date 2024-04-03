@@ -12,13 +12,15 @@ import { useState } from 'react';
 import { useMemo } from 'react';
 import { useCallback } from 'react';
 import { Fragment } from 'react';
+import { useContext } from 'react';
 
-import { AppState } from '@const/AppState.ts';
+import { FilesProcessContext } from '@contexts/Phase.context.tsx';
 
-export const FileUpload = ({ dispatch }: { dispatch: Dispatch<{ type: AppState }> }): ReactElement => {
+export const FileUpload = (): ReactElement => {
     const maxFiles = 5;
     const [files, setFiles]: [any, Dispatch<any>] = useState([]);
     const [fileRejections, setFileRejections]: [any, Dispatch<any>] = useState([]);
+    const { setFilesToProcess } = useContext(FilesProcessContext);
 
     const acceptedMimeTypes = useMemo(() => [MimeType.json], []);
     const values = useMemo(() => [...files, ...fileRejections.map((fileRejection: { file: any; }) => {
@@ -54,35 +56,39 @@ export const FileUpload = ({ dispatch }: { dispatch: Dispatch<{ type: AppState }
                 description="You can upload up to 5 json files."
                 disabled={files.length + fileRejections.length >= maxFiles}
                 dragMaxFilesMessage={(maxFiles: number) => `You can only import up to ${maxFiles} files`}
-                onAccepted={setFiles}
+                onAccepted={(files: File[]) => {
+                    setFiles(files);
+                    // dispatch({ type: AppState.PROCESSING, payload: files });
+                    setFilesToProcess(files);
+                }}
                 onRejected={setFileRejections}
                 values={values}
-                renderFile={(file, index) => {
-                    const { name, size, type } = file;
-                    const renderFileCountError = index === 0 && fileCountOverLimit > 0;
+                renderFile={(file: File, index: number) => {
+                    const { name, size, type }: { name: string, size: number, type: string } = file;
+                    const renderFileCountError: boolean = index === 0 && fileCountOverLimit > 0;
 
                     // We're displaying an <Alert /> component to aggregate files rejected for being over the maxFiles limit,
                     // so don't show those errors individually on each <FileCard />
                     const fileRejection = fileRejections.find((fileRejection: {
-                        file: File;
-                        reason: FileRejectionReason;
+                        file: File,
+                        reason: FileRejectionReason
                     }) => {
                         return fileRejection.file === file && fileRejection.reason !== FileRejectionReason.OverFileLimit;
                     });
                     const { message } = fileRejection || {};
 
+                    // I believe from here you can dispatch and process the files
+
                     return (
                         <Fragment key={`${file.name}-${index}`}>
                             {renderFileCountError &&
                               <Alert intent="danger" marginBottom={majorScale(2)} title={fileCountError} />}
-                            <FileCard
-                                isInvalid={fileRejection != null}
+                            <FileCard isInvalid={fileRejection != null}
                                 name={name}
                                 onRemove={() => handleRemove(file)}
                                 sizeInBytes={size}
                                 type={type}
-                                validationMessage={message}
-                            />
+                                validationMessage={message} />
                         </Fragment>
                     );
                 }}
