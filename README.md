@@ -1,5 +1,7 @@
 # Build Organizer - Project
 
+## Drag & drop json files to organize various build stages in relation to it's phase
+
 - A brief summary of your approach.
     - I wanted to take as simple of an approach from a users experience as possible. A user can both click on the file
       uploader target area as well as drag and drop files.
