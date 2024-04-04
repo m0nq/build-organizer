@@ -12,7 +12,7 @@
     - I assumed that the order of the phases would change, so accounted for variable phase ordering. I also assumed
       there would be a `phases.json` file present in order to determine the stages for each phase.
 - Time spent (this will not be used to judge your submission, but purely for us to track candidate experience).
-    - About 3 days
+    - About 4 days
 
 <!-- GETTING STARTED -->
 
