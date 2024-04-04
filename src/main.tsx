@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 
 import '@styles/global.css';
-import { PhaseProvider } from '@/contexts/Phase.context.tsx';
+import { PhaseProvider } from '@contexts/PhaseBuilder.context.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!)
     .render(

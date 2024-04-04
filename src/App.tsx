@@ -4,9 +4,9 @@ import { useContext } from 'react';
 import { Container } from '@components/Container.component.tsx';
 import { Layout } from '@components/Layout.component.tsx';
 import { FileUpload } from '@components/FileUpload.component.tsx';
+import { PhaseBuilderContext } from '@contexts/PhaseBuilder.context.tsx';
 
 import './App.css';
-import { PhaseContext } from '@/contexts/Phase.context.tsx';
 
 // App component should have at least 4 states - empty, loading, error, complete
 
@@ -15,7 +15,7 @@ function App(): ReactElement {
     //     type: AppState,
     //     payload?: File[]
     // }>] = useReducer(appReducer, AppState.EMPTY);
-    const { output } = useContext(PhaseContext);
+    const { output } = useContext(PhaseBuilderContext);
 
     return (
         <Layout>
@@ -24,12 +24,13 @@ function App(): ReactElement {
                     Upload Files
                 </h1>
 
-                {/**/}
-
-                {/*{state === AppState.PROCESSING && <Spinner />}*/}
+                {/*{state === AppState.PROCESSING ? <Spinner /> : <FileUpload />}*/}
                 <FileUpload />
-                {output && (<code>{output}</code>)}
-                {/*{state !== AppState.COMPLETE && <input type="file"/>}*/}
+                {output && (
+                    <div className="output-container">
+                        {output.split('\n').map((text) => <p style={{ textAlign: 'left' }} key={text}>{text}</p>)}
+                    </div>
+                )}
             </Container>
         </Layout>
     );

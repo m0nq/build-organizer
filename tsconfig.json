@@ -23,7 +23,8 @@
             "@components/*": ["./components/*"],
             "@const/*": ["./const/*"],
             "@styles/*": ["./styles/*"],
-            "@contexts/*": ["./contexts/*"]
+            "@contexts/*": ["./contexts/*"],
+            "@utils/*": ["./utils/*"]
         }
     },
     "include": ["src"],

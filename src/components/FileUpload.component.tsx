@@ -14,7 +14,7 @@ import { useCallback } from 'react';
 import { Fragment } from 'react';
 import { useContext } from 'react';
 
-import { FilesProcessContext } from '@contexts/Phase.context.tsx';
+import { FilesProcessContext } from '@contexts/PhaseBuilder.context.tsx';
 
 export const FileUpload = (): ReactElement => {
     const maxFiles = 5;

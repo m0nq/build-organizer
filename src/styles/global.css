@@ -38,8 +38,15 @@ a:hover {
   color: theme('colors.blue.200');
 }
 
-h1 + div {
+h1 ~ div {
   margin: auto;
+  max-width: 41%;
+}
+
+.output-container {
+  border: 1px solid white;
+  border-radius: 15px;
+  padding: 0 5%;
 }
 
 @media (prefers-color-scheme: light) {
