@@ -58,7 +58,6 @@ export const FileUpload = (): ReactElement => {
                 dragMaxFilesMessage={(maxFiles: number) => `You can only import up to ${maxFiles} files`}
                 onAccepted={(files: File[]) => {
                     setFiles(files);
-                    // dispatch({ type: AppState.PROCESSING, payload: files });
                     setFilesToProcess(files);
                 }}
                 onRejected={setFileRejections}
@@ -76,8 +75,6 @@ export const FileUpload = (): ReactElement => {
                         return fileRejection.file === file && fileRejection.reason !== FileRejectionReason.OverFileLimit;
                     });
                     const { message } = fileRejection || {};
-
-                    // I believe from here you can dispatch and process the files
 
                     return (
                         <Fragment key={`${file.name}-${index}`}>

@@ -6,6 +6,7 @@ export interface Stage {
 
 export const formatStages = (stages: Stage[][], phases: string[]): string => {
     const output: string[] = [];
+    // flatten the stages to avoid triple loops
     const flattenedStages = stages.reduce((a, b) => a.concat(b), []);
     phases.forEach((phase: string, i: number) => {
         const stagesObj = { [phase]: flattenedStages.filter(stage => stage.stageName === phase.toLowerCase()) };
@@ -19,7 +20,7 @@ export const formatStages = (stages: Stage[][], phases: string[]): string => {
 
 export const processFiles = async (files: File[]) => {
     if (files.length) {
-        // while processing a file, if there are any syntax errors (i.e. JSON.parse -> Error) then move to error state
+        // while processing a file, if there are any syntax errors (i.e. JSON.parse -> Error) then throw error
         // take files in, look for file named phases.json, if it doesn't exist throw an error. Otherwise, parse json string
         const phasesFile = files.find(file => file.name === 'phases.json');
         if (!phasesFile) {
@@ -32,14 +33,18 @@ export const processFiles = async (files: File[]) => {
             return `Your phases file requires ${phasesJson.length} files, and you only gave ${files.length - 1} other files. Please make sure you uploaded all the correct files.`;
         }
 
+        // ensure ordering of phases first
         let phases: string[] = [];
         for (const phase of phasesJson) {
             const { prerequisites, name } = phase;
             for (const prerequisite of prerequisites) {
+                // is this phase already in the list?
                 if (phases.includes(prerequisite)) {
+                    // is the name already in the list?
                     if (phases.includes(name)) {
                         continue;
                     } else {
+                        // insert prereq to be before name of phase
                         const prereqIdx = phases.indexOf(prerequisite) + 1;
                         // no .toSplicedMethod available for current ts version
                         phases = [...phases.splice(prereqIdx, 0, name)];
@@ -58,12 +63,12 @@ export const processFiles = async (files: File[]) => {
 
         const stageFiles = files.filter(file => file.name !== 'phases.json');
         const stages: Stage[][] = await Promise.all(stageFiles.map(async file => {
+            // need to know which file this stage came from
             const parsedStageFiles = JSON.parse(await file.text());
             const stageName = file.name.replace('.json', '');
             return parsedStageFiles.map((stage: File) => ({ stageName, ...stage }));
         }));
 
-        console.log('phases ->', phases);
         return formatStages(stages, phases);
     }
 

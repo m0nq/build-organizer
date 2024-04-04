@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 
 export const Layout = ({ children }: { children: ReactNode }): ReactElement => {
     return (
-        <div className="grid grid-rows-[auto_1fr_auto] h-screen">
+        <div>
             <main>{children}</main>
         </div>
     );
