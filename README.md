@@ -1,17 +1,16 @@
 # Build Organizer - Project
 
-<a name="readme-top"></a>
-
-- Instructions on how to run your program.
 - A brief summary of your approach.
+    - I wanted to take as simple of an approach from a users experience as possible. A user can both click on the file
+      uploader target area as well as drag and drop files.
+    - The processing of the files itself was the most complex part. I could've broken down the `processFiles` function
+      into smaller, more readable functions. But it was important to ensure the ordering of the possible phases was
+      created first.
 - What assumptions did you make while working on this problem?
+    - I assumed that the order of the phases would change, so accounted for variable phase ordering. I also assumed
+      there would be a `phases.json` file present in order to determine the stages for each phase.
 - Time spent (this will not be used to judge your submission, but purely for us to track candidate experience).
-
-### Built With
-
-* [![React][React.js]][React-url]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+    - About 3 days
 
 <!-- GETTING STARTED -->
 
