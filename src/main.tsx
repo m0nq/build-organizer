@@ -1,16 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { ErrorBoundary } from 'react-error-boundary';
 
+import { PhaseProvider } from '@contexts/PhaseBuilder.context.tsx';
 import App from './App.tsx';
 
 import '@styles/global.css';
-import { PhaseProvider } from '@contexts/PhaseBuilder.context.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!)
     .render(
         <React.StrictMode>
-            <PhaseProvider>
-                <App />
-            </PhaseProvider>
+            <ErrorBoundary fallback={<p>Something went wrong. Refresh and try again?</p>}>
+                <PhaseProvider>
+                    <App />
+                </PhaseProvider>
+            </ErrorBoundary>
         </React.StrictMode>
     );
