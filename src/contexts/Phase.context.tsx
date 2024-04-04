@@ -5,11 +5,11 @@ import { useEffect } from 'react';
 
 export const PhaseContext = createContext({
     output: '',
-    setOutput: (value: string) => {}
+    setOutput: (_: string) => {}
 });
 export const FilesProcessContext = createContext({
     filesToProcess: [] as File[],
-    setFilesToProcess: (value: File[]) => {}
+    setFilesToProcess: (_: File[]) => {}
 });
 
 export const PhaseProvider = ({ children }: { children: ReactNode }) => {
@@ -46,10 +46,10 @@ export const PhaseProvider = ({ children }: { children: ReactNode }) => {
                 fileReader.onabort = () => console.log('file reading was aborted');
                 fileReader.onerror = () => console.log('file reading has failed');
                 fileReader.onload = () => {
-                    setOutput(fileReader.result as string);
+                    // setOutput(fileReader.result as string);
+                    console.log('json file.result ->', JSON.parse(fileReader.result as string));
                 };
                 fileReader.readAsText(file);
-                console.log('file ->', file);
             });
             // }, []);
         })();
